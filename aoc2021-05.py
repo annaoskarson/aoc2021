@@ -21,7 +21,7 @@ def partone(coords):
     ans = sum([1 for x in kartan.values() if x > 1])
     print("The answer is:", ans)
 
-def parttwo(lines):
+def parttwo(coords):
     print("Advent of Code 2021, day 5, part 2.")
     kartan = {}
     for (x1, y1, x2, y2) in coords:
