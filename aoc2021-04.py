@@ -81,4 +81,6 @@ def parttwo(brs2, loket):
     print("The answer is:", ans)
 
 partone(brickor, loket)
+# Fortsätt med samma brickor, så har de redan spelats ett tag.
+# Man skulle kunna räkna fram loket också om man vill
 parttwo(brickor, loket)
