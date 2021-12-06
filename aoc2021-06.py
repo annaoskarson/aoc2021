@@ -15,7 +15,7 @@ def partone(f1):
                 fs[i] -= 1
         return(fs + newfish)
 
-    print("Advent of Code 2021, day 5, part 1.")
+    print("Advent of Code 2021, day 6, part 1.")
     for d in range(80):
         f1 = day(f1)
     ans = (len(f1))
@@ -44,7 +44,7 @@ def parttwo(f2):
                 newday[f-1] += fs[f]
         return(newday)
 
-    print("Advent of Code 2021, day 5, part 2.")
+    print("Advent of Code 2021, day 6, part 2.")
     fs = fishclass(f2)
 
     for d in range(256):
