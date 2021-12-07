@@ -27,7 +27,9 @@ def parttwo(c):
     def position(crabs, p):
         cost = 0
         for cr in crabs:
-            cost += sum(range(0, abs(cr-p)+1))
+            dist = abs(cr-p)
+            cost += (dist*(dist+1))//2
+            #cost += sum(range(0, abs(cr-p)+1))
         return(cost, p)
 
     print("Advent of Code 2021, day 7, part 2.")
