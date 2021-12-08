@@ -1,4 +1,4 @@
-with open('8.txt', 'r') as fil:
+with open('08.txt', 'r') as fil:
     ls = [[s.strip().split(' ') for s in r.split('|')] for r in fil.read().strip().split('\n') ]
 
 def partone(ls):

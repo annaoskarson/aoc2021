@@ -1,5 +1,5 @@
 
-with open('2.txt', 'r') as f:
+with open('02.txt', 'r') as f:
 	coms = f.read().split('\n')
 
 (x,y) = (0,0)
@@ -25,6 +25,5 @@ for com in coms:
 		a -= int(v)
 	elif d == 'down':
 		a += int(v)
-		
+
 print('2: ', x*y)
-	

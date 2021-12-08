@@ -1,4 +1,4 @@
-with open('5.txt', 'r') as fil:
+with open('05.txt', 'r') as fil:
     coords = ([[int(c) for c in row.split(',')] for row in fil.read().strip().replace(' -> ', ',').split('\n')])
 
 def partone(coords):

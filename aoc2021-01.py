@@ -1,4 +1,4 @@
-fil = open('aoc2021-01-input.txt', 'r')
+fil = open('01.txt', 'r')
 lines = [int(x) for x in fil.read().split('\n')[:-1]]
 
 def partone():

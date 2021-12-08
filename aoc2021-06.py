@@ -1,4 +1,4 @@
-with open('6.txt', 'r') as fil:
+with open('06.txt', 'r') as fil:
     fish = ([int(f) for f in fil.read().strip().split(',')])
 #    fish = ([int(f) for f in '3,4,3,1,2'.split(',')])
 
