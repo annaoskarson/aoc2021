@@ -13,15 +13,19 @@ def parttwo(ls):
     def numbers(ns): # Returns a translation dict for the digits.
         #print(ns)
         nums = {}
+        # First add the digits we already know the segments for.
         nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = 1
         nums[[('').join(sorted(n)) for n in ns if len(n) == 3][0]] = 7
         nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = 4
         nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = 8
 
+        # Try to distinguish each segment separated form the rest.
+        # First, the four digits we know the segments for.
         ABCDEFG = set([n for n in ns if len(n) == 7][0])
         ACF = set([n for n in ns if len(n) == 3][0])
         CF = set([n for n in ns if len(n) == 2][0])
         BCDF = set([n for n in ns if len(n) == 4][0])
+        # From these we get:
         A = ACF - CF
         BD = BCDF - CF
 
@@ -44,6 +48,7 @@ def parttwo(ls):
         G = EG & DG
         E = EG - G
 
+        # Now we have all segments separated and can build the rest of the digits manually.
         nums[('').join(sorted(list(A | C | D | E | G)))] = 2
         nums[('').join(sorted(list(A | C | D | F | G)))] = 3
         nums[('').join(sorted(list(A | B | D | F | G)))] = 5
