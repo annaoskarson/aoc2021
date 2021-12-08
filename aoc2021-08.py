@@ -18,15 +18,11 @@ def parttwo(ls):
         nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = 4
         nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = 8
 
-        # Try to distinguish each segment separated form the rest.
-        # First, the four digits we know the segments for.
-        ABCDEFG = set([n for n in ns if len(n) == 7][0])
-        ACF = set([n for n in ns if len(n) == 3][0])
-        CF = set([n for n in ns if len(n) == 2][0])
-        BCDF = set([n for n in ns if len(n) == 4][0])
-        # From these we get:
-        A = ACF - CF
-        BD = BCDF - CF
+        # We already know 1, 4, 7, 8.
+        CF = set([n for n in ns if len(n) == 2][0]) # 1
+        BCDF = set([n for n in ns if len(n) == 4][0]) # 4
+        ACF = set([n for n in ns if len(n) == 3][0]) # 7
+        ABCDEFG = set([n for n in ns if len(n) == 7][0]) # 8
 
         # 2, 3, 5 have five digits, segments in common: A, D, G
         temp = [set(n) for n in ns if len(n) == 5]
@@ -36,19 +32,16 @@ def parttwo(ls):
         temp = [set(n) for n in ns if len(n) == 6]
         BDEFG = temp[0] & temp[1] & temp[2]
 
-        # And now we can separate all segments.
-        B = BD - ADG
-        D = BD - B
-
-        DG = BDEFG & ADG
+        # And now we can nail down all segments.
+        A = ACF - CF
+        B = BCDF - CF - ADG
         C = CF - BDEFG
+        D = BCDF & ADG
+        E = ABCDEFG - ADG - BCDF
         F = BDEFG & CF
+        G = BDEFG & ADG - BCDF
 
-        EG = ABCDEFG - ACF - BCDF
-        G = EG & DG
-        E = EG - G
-
-        # Now we have all segments separated and can build the rest of the digits manually.
+        # And here are the rest of the digits.
         nums[('').join(sorted(list(A | C | D | E | G)))] = 2
         nums[('').join(sorted(list(A | C | D | F | G)))] = 3
         nums[('').join(sorted(list(A | B | D | F | G)))] = 5
