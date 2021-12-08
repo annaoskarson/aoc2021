@@ -4,14 +4,13 @@ with open('8.txt', 'r') as fil:
 def partone(ls):
     print("Advent of Code 2021, day 8, part 1.")
     count = 0
-    for l in ls:
-        count += sum(1 for d in l[1] if len(d) in [2, 3, 4, 7])
+    for defs, digits in ls:
+        count += len([d for d in digits if len(d) in [2, 3, 4, 7]])
     print("The answer is:", count)
 
 def parttwo(ls):
 
     def numbers(ns): # Returns a translation dict for the digits.
-        #print(ns)
         nums = {}
         # First add the digits we already know the segments for.
         nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = 1
@@ -33,12 +32,13 @@ def parttwo(ls):
         temp = [set(n) for n in ns if len(n) == 5]
         ADG = temp[0] & temp[1] & temp[2]
 
-        B = BD - ADG
-        D = BD - B
-
         # 6, 9, 0 have six digits, segments in common: B, D, E, F, G
         temp = [set(n) for n in ns if len(n) == 6]
         BDEFG = temp[0] & temp[1] & temp[2]
+
+        # And now we can separate all segments.
+        B = BD - ADG
+        D = BD - B
 
         DG = BDEFG & ADG
         C = CF - BDEFG
@@ -59,9 +59,9 @@ def parttwo(ls):
 
     print("Advent of Code 2021, day 8, part 2.")
     sum = 0
-    for l in ls:
-        defs = [('').join(sorted(list(n))) for n in l[0]]
-        digits = [('').join(sorted(list(n))) for n in l[1]]
+    for defs, digits in ls:
+        defs = [('').join(sorted(list(n))) for n in defs]
+        digits = [('').join(sorted(list(n))) for n in digits]
         ns = numbers(defs)
         this = ''
         for t in digits:
