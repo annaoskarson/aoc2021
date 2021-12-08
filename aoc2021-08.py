@@ -11,38 +11,35 @@ def partone(ls):
 def parttwo(ls):
 
     def numbers(ns): # Returns a translation dict for the digits.
-        #print(ns)
+
         nums = {}
         nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = 1
         nums[[('').join(sorted(list(n))) for n in ns if len(n) == 3][0]] = 7
         nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = 4
         nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = 8
 
-        ABCDEFG = set([n for n in ns if len(n) == 7][0])
-        ACF = set([n for n in ns if len(n) == 3][0])
-        CF = set([n for n in ns if len(n) == 2][0])
-        BCDF = set([n for n in ns if len(n) == 4][0])
-        A = ACF - CF
-        BD = BCDF - CF
+        # We already know 1, 4, 7, 8.
+        CF = set([n for n in ns if len(n) == 2][0]) # 1
+        BCDF = set([n for n in ns if len(n) == 4][0]) # 4
+        ACF = set([n for n in ns if len(n) == 3][0]) # 7
+        ABCDEFG = set([n for n in ns if len(n) == 7][0]) # 8
 
         # 2, 3, 5 have five digits, segments in common: A, D, G
         temp = [set(n) for n in ns if len(n) == 5]
         ADG = temp[0] & temp[1] & temp[2]
 
-        B = BD - ADG
-        D = BD - B
-
         # 6, 9, 0 have six digits, segments in common: B, D, E, F, G
         temp = [set(n) for n in ns if len(n) == 6]
         BDEFG = temp[0] & temp[1] & temp[2]
 
-        DG = BDEFG & ADG
+        # And now we can nail down all segments.
+        A = ACF - CF
+        B = BCDF - CF - ADG
         C = CF - BDEFG
+        D = BCDF & ADG
+        E = ABCDEFG - ADG - BCDF
         F = BDEFG & CF
-
-        EG = ABCDEFG - ACF - BCDF
-        G = EG & DG
-        E = EG - G
+        G = BDEFG & ADG - BCDF
 
         nums[('').join(sorted(list(A | C | D | E | G)))] = 2
         nums[('').join(sorted(list(A | C | D | F | G)))] = 3
