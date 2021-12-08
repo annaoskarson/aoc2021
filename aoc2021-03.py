@@ -1,4 +1,4 @@
-fil = open('3.txt', 'r')
+fil = open('03.txt', 'r')
 #lines = [int(x) for x in fil.read().split('\n')[:-1]]
 lines = fil.read().split('\n')[:-1]
 

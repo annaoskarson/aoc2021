@@ -1,4 +1,4 @@
-fil = open('4.txt', 'r')
+fil = open('04.txt', 'r')
 lines = fil.read().strip()
 
 loket = [int(x) for x in lines.split('\n\n')[:1][0].split(',')]
