@@ -14,7 +14,7 @@ def parttwo(ls):
         #print(ns)
         nums = {}
         nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = 1
-        nums[[('').join(sorted(list(n))) for n in ns if len(n) == 3][0]] = 7
+        nums[[('').join(sorted(n)) for n in ns if len(n) == 3][0]] = 7
         nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = 4
         nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = 8
 
