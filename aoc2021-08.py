@@ -41,6 +41,7 @@ def parttwo(ls):
         F = BDEFG & CF
         G = BDEFG & ADG - BCDF
 
+        # And here are the rest of the digits.
         nums[('').join(sorted(list(A | C | D | E | G)))] = 2
         nums[('').join(sorted(list(A | C | D | F | G)))] = 3
         nums[('').join(sorted(list(A | B | D | F | G)))] = 5
