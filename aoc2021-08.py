@@ -10,26 +10,26 @@ def partone(ls):
 
 def parttwo(ls):
 
-    def numbers(ns): # Returns a translation dict for the digits.
+    def numbers(numbers): # Returns a translation dict for the digits.
         nums = {}
         # First add the digits we already know the segments for.
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = 1
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 3][0]] = 7
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = 4
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = 8
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 2][0]] = 1
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 3][0]] = 7
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 4][0]] = 4
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 7][0]] = 8
 
         # We already know 1, 4, 7, 8.
-        CF = set([n for n in ns if len(n) == 2][0]) # 1
-        BCDF = set([n for n in ns if len(n) == 4][0]) # 4
-        ACF = set([n for n in ns if len(n) == 3][0]) # 7
-        ABCDEFG = set([n for n in ns if len(n) == 7][0]) # 8
+        CF = set([n for n in numbers if len(n) == 2][0]) # 1
+        BCDF = set([n for n in numbers if len(n) == 4][0]) # 4
+        ACF = set([n for n in numbers if len(n) == 3][0]) # 7
+        ABCDEFG = set([n for n in numbers if len(n) == 7][0]) # 8
 
         # 2, 3, 5 have five digits, segments in common: A, D, G
-        temp = [set(n) for n in ns if len(n) == 5]
+        temp = [set(n) for n in numbers if len(n) == 5]
         ADG = temp[0] & temp[1] & temp[2]
 
         # 6, 9, 0 have six digits, segments in common: B, D, E, F, G
-        temp = [set(n) for n in ns if len(n) == 6]
+        temp = [set(n) for n in numbers if len(n) == 6]
         BDEFG = temp[0] & temp[1] & temp[2]
 
         # And now we can nail down all segments.
@@ -66,7 +66,6 @@ def parttwo(ls):
         sum += int(this)
 
     print("The answer is:", sum)
-    # 834562 too low
 
 partone(ls)
 parttwo(ls)
