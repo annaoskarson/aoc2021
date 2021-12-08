@@ -1,5 +1,5 @@
 with open('7.txt', 'r') as fil:
-    crabs = ([int(f) for f in fil.read().strip().split(',')])
+    crabs = [int(f) for f in fil.read().strip().split(',')]
 
 #crabs = [16,1,2,0,4,2,7,1,2,14]
 
