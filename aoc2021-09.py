@@ -64,10 +64,10 @@ def parttwo(ds, lms):
     ans = three[0] * three[1] * three[2]
     print("The answer is:", ans)
 
-print(len([p for row in depths for p in row if p == 0 ] ))
+#print(len([p for row in depths for p in row if p == 0 ] ))
 
 lmins = partone(depths)
 
-print(max([depths[y][x] for (x,y) in lmins]))
+#print(max([depths[y][x] for (x,y) in lmins]))
 
 parttwo(depths, lmins)

@@ -11,13 +11,13 @@ score = 0
 endscr = []
 def points(r):
 	stack = []
-	for c in r:
-		if c in starts:
-			stack.append(c)
-		elif c in ends:
+	for ch in r:
+		if ch in starts:
+			stack.append(ch)
+		elif ch in ends:
 			s = stack[-1]
-			if starts.index(s) != ends.index(c):
-				return(scoring[c],[])
+			if starts.index(s) != ends.index(ch):
+				return(scoring[ch],[])
 			else:
 				stack.pop()
 	return(0, stack)
