@@ -12,11 +12,10 @@ def parttwo(ls):
 
     def numbers(numbers): # Returns a translation dict for the digits.
         nums = {}
-        # First add the digits we already know the segments for.
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 2][0]] = 1
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 3][0]] = 7
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 4][0]] = 4
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 7][0]] = 8
+        nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = '1'
+        nums[[('').join(sorted(n)) for n in ns if len(n) == 3][0]] = '7'
+        nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = '4'
+        nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = '8'
 
         # We already know 1, 4, 7, 8.
         CF = set([n for n in numbers if len(n) == 2][0]) # 1
@@ -42,12 +41,12 @@ def parttwo(ls):
         G = BDEFG & ADG - BCDF
 
         # And here are the rest of the digits.
-        nums[('').join(sorted(list(A | C | D | E | G)))] = 2
-        nums[('').join(sorted(list(A | C | D | F | G)))] = 3
-        nums[('').join(sorted(list(A | B | D | F | G)))] = 5
-        nums[('').join(sorted(list(A | B | D | E | F | G)))] = 6
-        nums[('').join(sorted(list(A | B | C | D | F | G)))] = 9
-        nums[('').join(sorted(list(A | B | C | E | F | G)))] = 0
+        nums[('').join(sorted(list(A | C | D | E | G)))] = '2'
+        nums[('').join(sorted(list(A | C | D | F | G)))] = '3'
+        nums[('').join(sorted(list(A | B | D | F | G)))] = '5'
+        nums[('').join(sorted(list(A | B | D | E | F | G)))] = '6'
+        nums[('').join(sorted(list(A | B | C | D | F | G)))] = '9'
+        nums[('').join(sorted(list(A | B | C | E | F | G)))] = '0'
         return(nums)
 
     print("Advent of Code 2021, day 8, part 2.")
@@ -60,7 +59,7 @@ def parttwo(ls):
         for t in digits:
             t = ('').join(sorted(t))
             if t in ns:
-                this += str(ns[t])
+                this += ns[t]
             else:
                 print(t, ' not in dict ---------') # Felsökningen. :)
         sum += int(this)

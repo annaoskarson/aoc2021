@@ -1,71 +1,73 @@
-with open('08.txt', 'r') as fil:
-    ls = [[s.strip().split(' ') for s in r.split('|')] for r in fil.read().strip().split('\n') ]
+with open('09.txt', 'r') as fil:
+    depths =[list(map(int, list(r))) for r in fil.read().strip().split('\n')]
+    #prinxt([[int(s) for s in r] for r in fil.read().strip().split('\n')])
+    #ls = [[s.strip().split(' ') for s in r] for r in fil.read().strip().split('\n') ]
+#print(ls)
 
-def partone(ls):
-    print("Advent of Code 2021, day 8, part 1.")
-    count = 0
-    for defs, digits in ls:
-        count += len([d for d in digits if len(d) in [2, 3, 4, 7]])
-    print("The answer is:", count)
+def partone(ds):
+    def localmin(ds, coords):
+        x,y = coords
+        nbc = []
+        if y < len(ds)-1:
+            nbc.append(ds[y+1][x])
+        if y > 0:
+            nbc.append(ds[y-1][x])
+        if x < len(ds[y])-1:
+            nbc.append(ds[y][x+1])
+        if x > 0:
+            nbc.append(ds[y][x-1])
+        return(all([ds[y][x] < n for n in nbc]))
 
-def parttwo(ls):
+    print("Advent of Code 2021, day 9, part 1.")
+    risk = 0
+    localmins = []
+    for y in range(len(ds)):
+        for x in range(len(ds[y])):
+            if localmin(ds, (x,y)):
+                localmins.append((x,y))
+                risk += ds[y][x]+1
+    #print('antal', len(localmins))
+    print("The answer is:", risk)
+    return(localmins)
 
-    def numbers(numbers): # Returns a translation dict for the digits.
-        nums = {}
-        # First add the digits we already know the segments for.
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 2][0]] = 1
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 3][0]] = 7
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 4][0]] = 4
-        nums[[('').join(sorted(n)) for n in numbers if len(n) == 7][0]] = 8
+def parttwo(ds, lms):
 
-        # We already know 1, 4, 7, 8.
-        CF = set([n for n in numbers if len(n) == 2][0]) # 1
-        BCDF = set([n for n in numbers if len(n) == 4][0]) # 4
-        ACF = set([n for n in numbers if len(n) == 3][0]) # 7
-        ABCDEFG = set([n for n in numbers if len(n) == 7][0]) # 8
+    def wholebasin(ds, coord, basin):
+        (x,y) = coord
+        nbsinbas = set()
+        if y < len(ds)-1 and ds[y+1][x] != 9 and (x, y+1) not in basin:
+            #print(coord, 'v', (x, y+1))
+            nbsinbas.add((x, y+1))
+        if y > 0 and ds[y-1][x] != 9 and (x, y-1) not in basin:
+            #print(coord, '^', (x, y-1))
+            nbsinbas.add((x, y-1))
+        if x < len(ds[y])-1 and ds[y][x+1] != 9 and (x+1, y) not in basin:
+            #print(coord, '>', (x+1, y))
+            nbsinbas.add((x+1, y))
+        if x > 0 and ds[y][x-1] != 9 and (x-1, y) not in basin:
+            #print(coord, '<', (x-1, y))
+            nbsinbas.add((x-1, y))
 
-        # 2, 3, 5 have five digits, segments in common: A, D, G
-        temp = [set(n) for n in numbers if len(n) == 5]
-        ADG = temp[0] & temp[1] & temp[2]
+        for (a, b) in nbsinbas:
+            basin.add((a,b))
+            basin = wholebasin(ds, (a,b), basin)
 
-        # 6, 9, 0 have six digits, segments in common: B, D, E, F, G
-        temp = [set(n) for n in numbers if len(n) == 6]
-        BDEFG = temp[0] & temp[1] & temp[2]
+        return(basin)
 
-        # And now we can nail down all segments.
-        A = ACF - CF
-        B = BCDF - CF - ADG
-        C = CF - BDEFG
-        D = BCDF & ADG
-        E = ABCDEFG - ADG - BCDF
-        F = BDEFG & CF
-        G = BDEFG & ADG - BCDF
+    print("Advent of Code 2021, day 9, part 2.")
+    basinsizes = []
+    for (x,y) in lms:
+        # Find how big that basin is and put in list.
+        basinsizes.append(len(wholebasin(ds, (x,y), {(x,y)})))
 
-        # And here are the rest of the digits.
-        nums[('').join(sorted(list(A | C | D | E | G)))] = 2
-        nums[('').join(sorted(list(A | C | D | F | G)))] = 3
-        nums[('').join(sorted(list(A | B | D | F | G)))] = 5
-        nums[('').join(sorted(list(A | B | D | E | F | G)))] = 6
-        nums[('').join(sorted(list(A | B | C | D | F | G)))] = 9
-        nums[('').join(sorted(list(A | B | C | E | F | G)))] = 0
-        return(nums)
+    three = sorted(basinsizes)[-3:]
+    ans = three[0] * three[1] * three[2]
+    print("The answer is:", ans)
 
-    print("Advent of Code 2021, day 8, part 2.")
-    sum = 0
-    for defs, digits in ls:
-        defs = [('').join(sorted(list(n))) for n in defs]
-        digits = [('').join(sorted(list(n))) for n in digits]
-        ns = numbers(defs)
-        this = ''
-        for t in digits:
-            t = ('').join(sorted(t))
-            if t in ns:
-                this += str(ns[t])
-            else:
-                print(t, ' not in dict ---------') # Felsökningen. :)
-        sum += int(this)
+#print(len([p for row in depths for p in row if p == 0 ] ))
 
-    print("The answer is:", sum)
+lmins = partone(depths)
 
-partone(ls)
-parttwo(ls)
+#print(max([depths[y][x] for (x,y) in lmins]))
+
+parttwo(depths, lmins)
