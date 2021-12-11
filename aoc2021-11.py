@@ -1,13 +1,16 @@
 with open('11.txt', 'r') as fil:
     lights =[list(map(int, list(r))) for r in fil.read().strip().split('\n')]
 
-import os, time
-clear = lambda: os.system('clear')
-
 lts = {}
 for y in range(len(lights)):
     for x in range(len(lights[y])):
         lts[(x,y)] = lights[y][x]
+
+import os, time
+clear = lambda: os.system('clear')
+
+import copy
+lts2 = copy.deepcopy(lts)
 
 def neighbors(point, grid):
     x,y = point
@@ -26,7 +29,7 @@ def load(grid, octs = {'all'}):
             grid[g] += 1
     return(grid)
 
-import termcolor
+import termcolor, playsound
 def pprint(grid, text = '', c = 'True', s = 0.05):
     t = {0: termcolor.colored(' ', 'grey'),
         1: termcolor.colored('·', 'grey'),
@@ -50,18 +53,24 @@ def pprint(grid, text = '', c = 'True', s = 0.05):
         rows += '\n'
     if c: clear()
     print(rows + text)
+    #time.sleep(0.01)
+    times = len([x for x in rows if x == '֍'])
+    times = times // 5  + (times > 0)
+    for t in range(times):
+        playsound.playsound('fl3.mp3', False)
+        time.sleep(0.0003)
     time.sleep(s)
 
 def flash(grid, flashed):
     high = set([oct for oct in grid.keys() if grid[oct] > 9])
     if len(high - flashed) > 0: # There are still some to flash.
-        f = high - flashed # All in f will be flashed
+        f = high - flashed # All in f will be flashed.
         for oct in f:
             flashed.add(oct)
             nbs = neighbors(oct, grid)
             grid = load(grid, nbs)
         return(flash(grid, flashed))
-    else: # Flashing is done
+    else: # Flashing is done for this time.
         pprint(grid)
         return(grid, flashed)
 
@@ -81,7 +90,6 @@ def partone(grid):
         totflash += len(flashed)
     print("The answer is:", totflash)
 
-
 def parttwo(grid):
     print("Advent of Code 2021, day 9, part 2.")
     step = 0
@@ -95,8 +103,6 @@ def parttwo(grid):
         step += 1
     print("The answer is:", step+1)
 
-import copy
-lts2 = copy.deepcopy(lts)
 partone(lts)
 _ = input('Press enter to continue to part 2.')
 parttwo(lts2)
