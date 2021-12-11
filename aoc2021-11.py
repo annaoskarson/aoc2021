@@ -37,18 +37,19 @@ def pprint(grid, text = '', c = 'True', s = 0.1):
         6: termcolor.colored('¤', 'grey'),
         7: termcolor.colored('o', 'grey'),
         8: termcolor.colored('O', 'grey'),
-        9: termcolor.colored('֍', 'yellow')}
+        9: termcolor.colored('Ø', 'grey'),
+        10: termcolor.colored('֍', 'yellow')}
     rows = '\n'
     (x1,y1) = max(grid.keys())
     for y in range(y1+1):
         for x in range(x1+1):
             this = grid[(x,y)]
-            if this > 9: this = 9
+            if this > 9: this = 10
             this = t[this]
             rows += this
         rows += '\n'
     if c: clear()
-    print(rows + '\n' + text)
+    print(rows + text)
     time.sleep(s)
 
 def flash(grid, flashed):
@@ -72,31 +73,26 @@ def reset(grid, flashed):
 def partone(grid):
     print("Advent of Code 2021, day 11, part 1.")
     totflash = 0
-    pprint(grid, '0')
     for step in range(100):
+        pprint(grid)
         grid = load(grid, {'all'})
         grid, flashed = flash(grid, set())
         grid = reset(grid, flashed)
         totflash += len(flashed)
-        #pprint(grid, str(step+1))
     print("The answer is:", totflash)
 
 
 def parttwo(grid):
-
     print("Advent of Code 2021, day 9, part 2.")
-    pprint(grid, '0')
     step = 0
     while True:
+        pprint(grid)
         grid = load(grid, {'all'})
         grid, flashed = flash(grid, set())
         if len(flashed) == len(grid):
             break
-        #pprint(grid, str(step+1))
         grid = reset(grid, flashed)
-        #pprint(grid, str(step+1))
         step += 1
-
     print("The answer is:", step+1)
 
 partone(lts)
