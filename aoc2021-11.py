@@ -27,7 +27,7 @@ def load(grid, octs = {'all'}):
     return(grid)
 
 import termcolor
-def pprint(grid, text = '', c = 'True', s = 0.1):
+def pprint(grid, text = '', c = 'True', s = 0.05):
     t = {0: termcolor.colored(' ', 'grey'),
         1: termcolor.colored('·', 'grey'),
         2: termcolor.colored('∙', 'grey'),
@@ -95,6 +95,8 @@ def parttwo(grid):
         step += 1
     print("The answer is:", step+1)
 
+import copy
+lts2 = copy.deepcopy(lts)
 partone(lts)
 _ = input('Press enter to continue to part 2.')
-parttwo(lts)
+parttwo(lts2)
