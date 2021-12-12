@@ -30,7 +30,7 @@ def load(grid, octs = {'all'}):
     return(grid)
 
 import termcolor, playsound
-def pprint(grid, text = '', c = 'True', s = 0.05):
+def pprint(grid, text = '', c = 'True', s = 0.1):
     t = {0: termcolor.colored(' ', 'grey'),
         1: termcolor.colored('·', 'grey'),
         2: termcolor.colored('∙', 'grey'),
