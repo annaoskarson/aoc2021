@@ -10,7 +10,9 @@ for [t, n] in m:
             map[a].add(b)
 
 def part(map, part):
-    print("Advent of Code 2021, day 9, part 2.")
+    if part: p = '1'
+    else: p = '2'
+    print('Advent of Code 2021, day 9, part ' + p +'.')
     def wayout(map, way, twice):
         # twice is True if the twice rule is used.
         this = way[-1] # Where we are now.
