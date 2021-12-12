@@ -9,10 +9,8 @@ for [t, n] in m:
         else:
             map[a].add(b)
 
-def part(map, part):
-    if part: p = '1'
-    else: p = '2'
-    print('Advent of Code 2021, day 9, part ' + p +'.')
+def part(map, part1):
+    print('Advent of Code 2021, day 9, part ' + str(int(not part1) +1) +'.')
     def wayout(map, way, twice):
         # twice is True if the twice rule is used.
         this = way[-1] # Where we are now.
@@ -32,7 +30,7 @@ def part(map, part):
                     wayout(map, way + [n], twice)
 
     ways = []
-    wayout(map, ['start'], part) # Start from 'start' without twice used.
+    wayout(map, ['start'], part1) # Start from 'start' without twice used.
     print("The answer is:", len(ways))
 
 part(map, True) # Same as part 2 but without going twice any time.
