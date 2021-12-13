@@ -11,6 +11,7 @@ for [t, n] in m:
 
 def part(map, part1):
     print('Advent of Code 2021, day 9, part ' + str(int(not part1) +1) +'.')
+
     def wayout(map, way, twice):
         # twice is True if the twice rule is used.
         this = way[-1] # Where we are now.
