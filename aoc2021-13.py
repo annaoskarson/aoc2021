@@ -1,5 +1,5 @@
 with open('13.txt', 'r') as fil:
-    lines = fil.read().strip().split('\n')#    coords = ([[int(c) for c in row.split(',')] for row in fil.read().strip().split('\n')])
+    lines = fil.read().strip().split('\n')
 
 m = set()
 instr = []
