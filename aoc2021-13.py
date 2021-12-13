@@ -1,7 +1,3 @@
-import timeit
-
-start = timeit.default_timer()
-
 with open('13.txt', 'r') as fil:
     lines = fil.read().strip().split('\n')
 
@@ -49,7 +45,3 @@ def parts(m, instr):
     print("The answer is:")
     pprint(m)
 parts(m, instr)
-
-stop = timeit.default_timer()
-
-print('Time: ', stop - start)
