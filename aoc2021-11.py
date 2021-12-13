@@ -71,7 +71,7 @@ def flash(grid, flashed):
             grid = load(grid, nbs)
         return(flash(grid, flashed))
     else: # Flashing is done for this time.
-        pprint(grid)
+        #pprint(grid) # Uncomment if you want flash and pop.
         return(grid, flashed)
 
 def reset(grid, flashed):
@@ -83,7 +83,7 @@ def partone(grid):
     print("Advent of Code 2021, day 11, part 1.")
     totflash = 0
     for step in range(100):
-        pprint(grid)
+        #pprint(grid) # Uncomment if you want flash and pop.
         grid = load(grid, {'all'})
         grid, flashed = flash(grid, set())
         grid = reset(grid, flashed)
@@ -94,7 +94,7 @@ def parttwo(grid):
     print("Advent of Code 2021, day 9, part 2.")
     step = 0
     while True:
-        pprint(grid)
+        #pprint(grid) # Uncomment if you want flash and pop.
         grid = load(grid, {'all'})
         grid, flashed = flash(grid, set())
         if len(flashed) == len(grid):
@@ -104,5 +104,5 @@ def parttwo(grid):
     print("The answer is:", step+1)
 
 partone(lts)
-_ = input('Press enter to continue to part 2.')
+#_ = input('Press enter to continue to part 2.') # uncomment if printing.
 parttwo(lts2)
