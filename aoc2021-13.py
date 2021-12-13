@@ -30,9 +30,13 @@ def parts(m, instr):
     for (f, n) in instr:
         for (x,y) in list(m):
             if f is 'x' and x > n:
-                m = m - {(x,y)} | {(2*n-x,y)}
+                (x1, y1) = (2*n-x, y)
+                m.remove((x,y))
+                m.add((x1,y1))
             elif f is 'y' and y > n:
-                m = m - {(x,y)} | {(x,2*n-y)}
+                (x1, y1) = (x, 2*n-y)
+                m.remove((x,y))
+                m.add((x1,y1))
         if ans1 is False:
             ans1 = len(m)
 
