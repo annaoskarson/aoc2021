@@ -12,10 +12,10 @@ def parttwo(ls):
 
     def numbers(numbers): # Returns a translation dict for the digits.
         nums = {}
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 2][0]] = '1'
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 3][0]] = '7'
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 4][0]] = '4'
-        nums[[('').join(sorted(n)) for n in ns if len(n) == 7][0]] = '8'
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 2][0]] = '1'
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 3][0]] = '7'
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 4][0]] = '4'
+        nums[[('').join(sorted(n)) for n in numbers if len(n) == 7][0]] = '8'
 
         # We already know 1, 4, 7, 8.
         CF = set([n for n in numbers if len(n) == 2][0]) # 1

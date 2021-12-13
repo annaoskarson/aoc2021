@@ -5,7 +5,10 @@ m = set()
 instr = []
 for l in lines:
     if ',' in l:
-        x, y = map(int, l.split(','))
+        x, y = l.split(',')
+        x = int(x)
+        y = int(y)
+        #(x, y) = map(int, l.split(',')) # Funkar inte när jag mäter tiden ...
         m.add((x,y))
     elif '=' in l:
         f, n = l.split(' ')[2].split('=')
@@ -29,11 +32,11 @@ def parts(m, instr):
     ans1 = False
     for (f, n) in instr:
         for (x,y) in list(m):
-            if f is 'x' and x > n:
+            if f == 'x' and x > n:
                 (x1, y1) = (2*n-x, y)
                 m.remove((x,y))
                 m.add((x1,y1))
-            elif f is 'y' and y > n:
+            elif f == 'y' and y > n:
                 (x1, y1) = (x, 2*n-y)
                 m.remove((x,y))
                 m.add((x1,y1))

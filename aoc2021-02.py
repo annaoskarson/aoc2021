@@ -1,6 +1,6 @@
 
 with open('02.txt', 'r') as f:
-	coms = f.read().split('\n')
+	coms = f.read().strip().split('\n')
 
 (x,y) = (0,0)
 for com in coms:
