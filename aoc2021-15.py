@@ -1,4 +1,4 @@
-with open('15.txt', 'r') as fil:
+with open('15-test.txt', 'r') as fil:
     lines = fil.read().strip().split('\n')
 
 coords = {}
@@ -48,7 +48,13 @@ def walk(grid, start):
     prioq = [(0, start)]
 
     while len(prioq) > 0:
-        hererisk, here = heapq.heappop(prioq)
+        #hererisk, here = heapq.heappop(prioq)
+        #print(prioq)
+        prioq = sorted(prioq)
+        #print(prioq)
+        #print()
+        hererisk, here = prioq.pop(0)
+        #print(here)
 
         if hererisk > risks[here]:
             continue
@@ -58,11 +64,12 @@ def walk(grid, start):
 
             if newrisk < risks[nb]:
                 risks[nb] = newrisk
-                heapq.heappush(prioq, (newrisk, nb))
+                #heapq.heappush(prioq, (newrisk, nb))
+                prioq.append((newrisk, nb))
     return(risks)
 
 def partone(grid, start, goal):
-    print('Advent of Code 2021, day 14 part 1.')
+    print('Advent of Code 2021, day 15 part 1.')
     dist = walk(grid, start)
     print('The answer is', dist[goal])
 
@@ -72,8 +79,10 @@ partone(grid, start, goal)
 # 731 too low
 # 739 right
 
+exit()
+
 def parttwo(egrid, start):
-    print('Advent of Code 2021, day 14 part 2.')
+    print('Advent of Code 2021, day 15 part 2.')
     egoal = max(ecoords.keys())
     dist2 = walk(egrid, start)
     print('The answer is', dist2[egoal])
