@@ -1,8 +1,6 @@
 with open('18.txt', 'r') as fil:
     lines = fil.read().strip().split('\n')
 
-import json
-
 def magnitude(ls): # Calculates the magnitude of a task.
     left, right = ls[0], ls[1]
     if type(left) is int and type(right) is int:
@@ -93,7 +91,7 @@ def destring(ls): # Takes back from estring to a list.
         if type(l) == int:
             l = str(l)
         new += l
-    new = json.loads(new)
+    new = eval(new)
     return(new)
 
 def splitt(ls): # Makes a split on a string.
@@ -108,11 +106,11 @@ def splitt(ls): # Makes a split on a string.
             for pos in range(len(new)):
                 ls.insert(i + pos, new[pos])
             ls = ''.join(ls)
-            ls = json.loads(ls)
+            ls = eval(ls)
             return(ls)
         i += 1
     ls = ''.join(ls)
-    ls = json.loads(ls)
+    ls = eval(ls)
     return(ls)
 
 def maths(task): # Does the maths on a task.
@@ -128,9 +126,9 @@ def maths(task): # Does the maths on a task.
     return(task)
 
 def partone(lines):
-    task = json.loads(lines[0])
+    task = eval(lines[0])
     for l in lines[1:]:
-        l = json.loads(l)
+        l = eval(l)
         task = [task, l]
         task = maths(task)
     task = magnitude(task)
@@ -140,8 +138,8 @@ def parttwo(lines):
     sum = 0
     for k in range(len(lines)):
         for m in range(k+1, len(lines)):
-            taskk = json.loads(lines[k])
-            taskm = json.loads(lines[m])
+            taskk = eval(lines[k])
+            taskm = eval(lines[m])
             task1 = [taskk, taskm]
             task2 = [taskm, taskk]
             ans1 = magnitude(maths(task1))
