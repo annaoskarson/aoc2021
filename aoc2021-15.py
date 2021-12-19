@@ -1,4 +1,4 @@
-with open('15-test.txt', 'r') as fil:
+with open('15.txt', 'r') as fil:
     lines = fil.read().strip().split('\n')
 
 coords = {}
@@ -13,7 +13,7 @@ goal = (xmax, ymax)
 
 def nbs(point, coords):
     x,y = point
-    nbs = {(x-1, y-1), (x, y-1), (x, y+1), (x+1, y)}
+    nbs = {(x-1, y), (x, y-1), (x, y+1), (x+1, y)}
     nbs = [pt for pt in nbs if pt in coords]
     return(nbs)
 
@@ -37,59 +37,32 @@ def fixgrid(coords):
     return(grid)
 
 grid = fixgrid(coords)
-
 egrid = fixgrid(ecoords)
 
-import heapq
-
-def walk(grid, start):
-    risks = {n: float('inf') for n in grid}
-    risks[start] = 0
-    prioq = [(0, start)]
-
-    while len(prioq) > 0:
-        #hererisk, here = heapq.heappop(prioq)
-        #print(prioq)
-        prioq = sorted(prioq)
-        #print(prioq)
-        #print()
-        hererisk, here = prioq.pop(0)
-        #print(here)
-
-        if hererisk > risks[here]:
+def walk2(Graph, Start, Goal):
+    visited = set()
+    tovisit = [(0, Start)]
+    while True:
+        hrisk, hpos = tovisit.pop(0)
+        if hpos in visited:
             continue
-
-        for nb, risk in grid[here].items():
-            newrisk = hererisk + risk
-
-            if newrisk < risks[nb]:
-                risks[nb] = newrisk
-                #heapq.heappush(prioq, (newrisk, nb))
-                prioq.append((newrisk, nb))
-    return(risks)
+        visited.add(hpos)
+        if hpos == Goal:
+            return(hrisk)
+        tovisit.extend([(hrisk + nrisk, npos) for npos, nrisk in Graph[hpos].items() if npos not in visited])
+        tovisit = sorted(tovisit)
 
 def partone(grid, start, goal):
     print('Advent of Code 2021, day 15 part 1.')
-    dist = walk(grid, start)
-    print('The answer is', dist[goal])
+    ans = walk2(grid, start, goal)
+    print('The answer is', ans)
 
 partone(grid, start, goal)
-# 740 too high
-# 739 ...
-# 731 too low
-# 739 right
 
-exit()
-
-def parttwo(egrid, start):
+def parttwo(grid, start, goal):
     print('Advent of Code 2021, day 15 part 2.')
-    egoal = max(ecoords.keys())
-    dist2 = walk(egrid, start)
-    print('The answer is', dist2[egoal])
+    ans = walk2(grid, start, goal)
+    print('The answer is', ans)
 
-parttwo(egrid, start)
-# 3042 too high
-# 3041 too high
-# 3030 too low
-# 3037 not right
-# 3040 right ...
+egoal = max(ecoords.keys())
+parttwo(egrid, start, egoal)
