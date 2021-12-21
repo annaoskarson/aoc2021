@@ -1,61 +1,103 @@
-with open('16-t1.txt', 'r') as fil:
+with open('16.txt', 'r') as fil:
     code = fil.read().strip()
 
-print(code)
 h_size = len(code) * 4
 bincode = str((bin(int(code, 16))[2:]).zfill(h_size))
 
-print(bincode)
-
-def run(code, i=0):
-    print(code)
+def decode(code, i):
     while i < len(code):
-        print(i, len(code), code)
-        print(int(code[i:], 2))
-        if int(code[i:], 2) == 0:
-            break
-        v = int(code[i:i+3], 2)
+
+        V = int(code[i:i+3], 2)
         i += 3
-        t_id = int(code[i:i+3], 2)
+        ID = int(code[i:i+3], 2)
         i += 3
-        print('V', v, 'T', t_id)
-        if t_id == 4: # Literal packet
-            more, bits = int(code[i], 2), code[i+1:i+5]
-            i += 5
-            print(more, bits)
+
+        if ID == 4: # literal
+
+            lit = ''
+            more = 1
             while more:
-                more, nbit = int(code[i], 2), code[i+1:i+5]
-                print(more, nbit)
-                bits += nbit
-                i += 5
-            lit = int(bits, 2)
-            print(lit)
-        else: # Operator packet
-            lt_id = int(code[i])
+                more = int(code[i], 2)
+                i += 1
+                lit += code[i:i+4]
+                i += 4
+            lit = int(lit, 2)
+
+            if i >= len(code) or int(code[i:], 2) == 0:
+                return({'Version': V, 'ID': ID, 'Content': lit}, len(code))
+            else:
+                return({'Version': V, 'ID': ID, 'Content': lit}, i)
+
+        else: # operator packet
+            l = code[i]
+            l = int(l, 2)
             i += 1
-            if lt_id: # Number of sub packets
-                l = int(code[i:i+11], 2)
+
+            if l:
+                num = code[i:i+11]
                 i += 11
-                # och nu då?
-            else: # length of subpackets
-                l = int(code[i:i+15], 2)
+                num = int(num, 2)
+
+                packages = []
+                for _ in range(num):
+                    pak, i = decode(code, i)
+                    packages.append(pak)
+                return({'Version': V, 'ID': ID, 'Content': packages}, i)
+
+            else:
+                length = code[i:i+15]
                 i += 15
-                # och nu då?
+                length = int(length, 2)
+                packages = []
+                stop = i + length
+                now = i
+                while i < stop:
+                    pak, i = decode(code, i)
+                    packages.append(pak)
+                return({'Version': V, 'ID': ID, 'Content': packages}, i)
 
+def versionsum(packets):
+    if type(packets['Content']) is int:
+        return(packets['Version'])
+    else:
+        return(packets['Version'] + sum([versionsum(a) for a in packets['Content']]))
 
+def evaluate(packets):
+    id = packets['ID']
+    content = packets['Content']
 
-run(bincode)
-#print('version sum', versum)
-print()
-#interpret('01010000001')
-#interpret('10010000010')
-#interpret('0011000001100000')
+    if id == 0:
+        result = sum(evaluate(p) for p in content)
+    elif id == 1:
+        result = 1
+        for p in content:
+            result = result * evaluate(p)
+    elif id == 2:
+        result = min(evaluate(p) for p in content)
+    elif id == 3:
+        result = max(evaluate(p) for p in content)
+    elif id == 4:
+        return(content)
+    elif id == 5:
+        result = evaluate(content[0]) > evaluate(content[1])
+    elif id == 6:
+        result = evaluate(content[0]) < evaluate(content[1])
+    elif id == 7:
+        result = evaluate(content[0]) == evaluate(content[1])
+    return(result)
 
-#interpret('110100010100101001000100100')
-exit()
+def partone(code):
+    print('Advent of Code, day 16 part 1.')
+    packets, _ = decode(bincode, 0)
+    vsum = versionsum(packets)
+    print('The answer is', vsum)
 
-def partone():
-    print("Advent of Code 2021, day 16, part 1.")
-    print("The answer is:")
-    #pprint(m)
-#partone()
+partone(bincode)
+
+def parttwo(code):
+    print('Advent of Code, day 16, part 2.')
+    packets, _ = decode(bincode, 0)
+    ans = evaluate(packets)
+    print('The answer is', ans)
+
+parttwo(bincode)
