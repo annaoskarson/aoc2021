@@ -29,20 +29,13 @@ def partone(lines):
     print('The answer is', len(coords))
 
 #partone(lines)
-test = False
+
 def outside(c2, c1):
     xout = (c2['x'][0] > c1['x'][1]) or (c2['x'][1] < c1['x'][0])
     yout = (c2['y'][0] > c1['y'][1]) or (c2['y'][1] < c1['y'][0])
     zout = (c2['z'][0] > c1['z'][1]) or (c2['z'][1] < c1['z'][0])
     out = any([xout, yout, zout])
     return(out)
-
-def inside(outer, inner):
-    xin = (outer['x'][0] <= inner['x'][0]) and (inner['x'][1] <= outer['x'][1])
-    yin = (outer['y'][0] <= inner['y'][0]) and (inner['y'][1] <= outer['y'][1])
-    zin = (outer['z'][0] <= inner['z'][0]) and (inner['z'][1] <= outer['z'][1])
-    allin = all([xin, yin, zin])
-    return(allin)
 
 def addcuboid(nspace, cuboid):
     if len(nspace) == 0:
@@ -68,11 +61,8 @@ def remcuboid(nspace, cuboid):
              # Add the part untouched.
              newcuboids.append(part)
 
-        elif inside(cuboid, part):
-            pass
-
         else:
-            # Booleans for defining walls easier.
+            # Booleans for making definitions of  walls easier.
             roof, floor, left, right = False, False, False, False
 
             if part['y'][1] > cuboid['y'][1]:
