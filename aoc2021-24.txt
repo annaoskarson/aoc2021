@@ -1,0 +1,535 @@
+# First, interpret the assembler code and make some assumptions regarding
+# the comparisons.
+
+    inp w
+w = t[0]
+    mul x 0
+x = 0
+    add x z
+x = 0
+    mod x 26
+x = 0
+    div z 1
+z = 0
+    add x 13
+x = 13
+    eql x w
+x = (13 == t[0]) = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = 0
+    mul y 0
+y = 0
+    add y w
+y = t[0]
+    add y 10
+y = 10 + t[0]
+    mul y x
+y = (10 + t[0])
+    add z y
+z = (10 + t[0])
+
+    inp w
+w = t[1]
+    mul x 0
+x = 0
+    add x z
+x = (10 + t[0])
+    mod x 26
+x = (10 + t[0]) % 26 = (10 + t[0])
+    div z 1
+z = (10 + t[0])
+    add x 11
+x = (10 + t[0]) + 11
+    eql x w
+x = (10 + t[0]) + 11 == t[1] : 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y  = 26
+    mul z y
+z = (10 + t[0]) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[1]
+    add y 16
+y = (16 + t[1])
+    mul y x
+y = (16 + t[1])
+    add z y
+z = (10 + t[0]) * 26 + (16 + t[1])
+
+    inp w
+w = t[2]
+    mul x 0
+x = 0
+    add x z
+x = (10 + t[0]) * 26 + (16 + t[1])
+    mod x 26
+x = (16 +t[1])
+    div z 1
+z = (10 + t[0]) * 26 + (16 + t[1])
+    add x 11
+x = (16 + t[1]) + 11
+    eql x w
+x = (16 + t[1]) + 11 == t[2] = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = ((10 + t[0]) * 26 + (16 +t[1])) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[2]
+    add y 0
+y = t[2]
+    mul y x
+y = t[2]
+    add z y
+z = ((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]
+
+    inp w
+w = t[3]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]
+    mod x 26
+x = t[2]
+    div z 1
+z = ((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]
+    add x 10
+x = (10 + t[2])
+    eql x w
+x = (10 + t[2]) == t[3] = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = (((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[3]
+    add y 13
+y = t[3] + 13
+    mul y x
+y = t[3] + 13
+    add z y
+z = (((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]) * 26 + (t[3] + 13)
+
+    inp w
+w = t[4]
+    mul x 0
+x = 0
+    add x z
+x = (((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]) * 26 + (t[3 + 13])
+    mod x 26
+x = (t[3] + 13)
+    div z 26
+z = ((10 + t[0]) * 26 + (16 +t[1])) * 26 + t[2]
+    add x -14
+x = (t[3] + 13) - 14 = (t[3] - 1)
+    eql x w
+x = (t[3] - 1) == t[4] : ANTAG : t[3] =  t[4] + 1 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = (((10 + t[0]) * 26 + (16 + t[1])) * 26 + t[2])
+    mul y 0
+y = 0
+    add y w
+y = t[4]
+    add y 7
+y = (t[4] + 7)
+    mul y x
+y = (t[4] + 7) * 0 = 0
+    add z y
+z = (((10 + t[0]) * 26 + (16 + t[1])) * 26 + t[2])
+
+    inp w
+w = t[5]
+    mul x 0
+x = 0
+    add x z
+x = (((10 + t[0]) * 26 + (16 + t[1])) * 26 + t[2])
+    mod x 26
+x = t[2]
+    div z 26
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    add x -4
+x = t[2] - 4
+    eql x w
+x = (t[2] - 4) == t[5]: ANTAG t[2] = t[5] + 4 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    mul y 0
+y = 0
+    add y w
+y = t[5]
+    add y 11
+y = t[5] + 11
+    mul y x
+y = 0
+    add z y
+z = (10 + t[0]) * 26 + (16 + t[1])
+
+    inp w
+w = t[6]
+    mul x 0
+x = 0
+    add x z
+x = (10 + t[0]) * 26 + (16 + t[1])
+    mod x 26
+x = (16 + t[1])
+    div z 1
+z = (10 + t[0]) * 26 + (16 + t[1])
+    add x 11
+x = (16 + t[1]) + 11
+    eql x w
+x = (16 + t[1]) + 11 == t[6] : x = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[6]
+    add y 11
+y = t[6] + 11
+    mul y x
+y = t[6] + 11
+    add z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (t[6] + 11)
+
+    inp w
+w = t[7]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (t[6] + 11)
+    mod x 26
+x = (t[6] + 11)
+    div z 26
+z = (10 + t[0]) * 26 + (16 + t[1])
+    add x -3
+x = (t[6] + 11) - 3 = (t[6] + 8)
+    eql x w
+x = (t[6] + 8) == t[7] : ANTAG t[6] = t[7] - 8 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = (10 + t[0]) * 26 + (16 + t[1])
+    mul y 0
+y = 0
+    add y w
+y = t[7]
+    add y 10
+y = t[7] + 10
+    mul y x
+y = 0
+    add z y
+z = (10 + t[0]) * 26 + (16 + t[1])
+
+    inp w
+w = t[8]
+    mul x 0
+x = 0
+    add x z
+x = (10 + t[0]) * 26 + (16 + t[1])
+    mod x 26
+x = (16 + t[1])
+    div z 1
+z = (10 + t[0]) * 26 + (16 + t[1])
+    add x 12
+x = (16 + t[1]) + 12 = (28 + t[1])
+    eql x w
+x = (28 + t[1]) == t[8] : x = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[8]
+    add y 16
+y = 16 + t[8]
+    mul y x
+y = 16 + t[8]
+    add z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (16 + t[8])
+
+    inp w
+w = t[9]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (16 + t[8])
+    mod x 26
+x = (16 + t[8])
+    div z 26
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    add x -12
+x = (16 + t[8]) - 12 = 4 + t[8]
+    eql x w
+x = 4 + t[8] == t[9] : ANTAG t[8] = t[9] - 4 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+y = ((10 + t[0]) * 26 + (16 + t[1])) + (16 + t[8])
+    mul y 0
+y = 0
+    add y w
+y = t[9]
+    add y 8
+y = t[9] + 8
+    mul y x
+y = 0
+    add z y
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+
+    inp w
+w = t[10]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 + t[1]))
+    mod x 26
+x = (16 + t[1])
+    div z 1
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    add x 13
+x = (16 + t[1]) + 13 = (29 + t[1])
+    eql x w
+x = (29 + t[1]) == t[10] : x = 0
+    eql x 0
+x = 1
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 25
+    add y 1
+y = 26
+    mul z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26
+    mul y 0
+y = 0
+    add y w
+y = t[10]
+    add y 15
+y = t[10] + 15
+    mul y x
+y = (t[10] + 15)
+    add z y
+z = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (t[10] + 15)
+
+    inp w
+w = t[11]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 + t[1])) * 26 + (t[10] + 15)
+    mod x 26
+x = (t[10] + 15)
+    div z 26
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    add x -12
+x = (t[10] + 15) - 12 = (t[10] + 3)
+    eql x w
+x = (t[10] + 3) == t[11] : ANTAG t[10] = t[11] - 3 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+    mul y 0
+y = 0
+    add y w
+y = t[11]
+    add y 2
+y = t[11] + 2
+    mul y x
+y = 0
+    add z y
+z = ((10 + t[0]) * 26 + (16 + t[1]))
+
+    inp w
+w = t[12]
+    mul x 0
+x = 0
+    add x z
+x = ((10 + t[0]) * 26 + (16 + t[1]))
+    mod x 26
+x = (16 + t[1])
+    div z 26
+z = (10 + t[0])
+    add x -15
+x = (16 + t[1]) - 15 = (t[1] + 1)
+    eql x w
+x = (t[1] + 1) == t[12] : ANTAG t[1] = t[12] - 1 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = (10 + t[0])
+    mul y 0
+y = 0
+    add y w
+y = t[12]
+    add y 5
+y = t[12] + 5
+    mul y x
+y = 0
+    add z y
+z = (10 + t[0])
+
+    inp w
+w = t[13]
+    mul x 0
+x = 0
+    add x z
+x = (10 + t[0])
+    mod x 26
+x = (10 + t[0])
+    div z 26
+z = 0
+    add x -12
+x = (10 + t[0]) - 12 = t[0] - 2
+    eql x w
+x = t[0] - 2 == t[13] : ANTAG t[0] = t[13] + 2 : x = 1
+    eql x 0
+x = 0
+    mul y 0
+y = 0
+    add y 25
+y = 25
+    mul y x
+y = 0
+    add y 1
+y = 1
+    mul z y
+z = 0
+    mul y 0
+y = 0
+    add y w
+y = t[13]
+    add y 10
+y = t[13] + 10
+    mul y x
+y = 0
+    add z y
+z = 0
+
+# Then, we got these dependencies:
+
+t[3] = t[4] + 1
+t[2] = t[5] + 4
+t[6] = t[7] - 8
+t[8] = t[9] - 4
+t[10] = t[11] - 3
+t[1] = t[12] - 1
+t[0] = t[13] + 2
+
+# From these, make the largest and smallest numbers.
+
+# largest : 98998519596997
+# smallest : 31512119151421
